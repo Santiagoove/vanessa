@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Vanessa ⏰</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:radial-gradient(circle,#1a0006,#000000);
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+}
+
+/* ===== PARTICULAS ===== */
+
+.particle{
+position:absolute;
+font-size:18px;
+animation:float linear infinite;
+opacity:0.7;
+}
+
+@keyframes float{
+0%{transform:translateY(110vh);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-20vh);opacity:0;}
+}
+
+/* ===== CONTENEDOR ===== */
+
+.container{
+background:rgba(0,0,0,0.6);
+border:1px solid #ff003c;
+border-radius:20px;
+padding:40px;
+backdrop-filter:blur(10px);
+text-align:center;
+animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:scale(0.8);}
+to{opacity:1; transform:scale(1);}
+}
+
+/* ===== RELOJ ===== */
+
+.clock{
+width:150px;
+height:150px;
+border-radius:50%;
+border:3px solid #ff003c;
+margin:auto;
+position:relative;
+animation:rotate 10s linear infinite;
+}
+
+@keyframes rotate{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+.hand{
+width:2px;
+height:60px;
+background:#ff003c;
+position:absolute;
+top:20px;
+left:50%;
+transform-origin:bottom;
+}
+
+/* ===== TEXTO ===== */
+
+h1{
+color:#ff003c;
+text-shadow:0 0 10px #ff003c;
+}
+
+#dialogo{
+margin-top:20px;
+min-height:40px;
+font-size:20px;
+}
+
+/* ===== BOTONES ===== */
+
+button{
+padding:15px 30px;
+margin:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:18px;
+transition:0.3s;
+}
+
+#aceptar{
+background:#ff003c;
+color:white;
+}
+
+#rechazar{
+background:#111;
+color:white;
+}
+
+#forzado{
+background:#990000;
+color:white;
+display:none;
+}
+
+/* ===== FINAL ===== */
+
+#final{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+display:none;
+font-size:40px;
+text-align:center;
+color:#ff003c;
+text-shadow:0 0 20px red;
+}
+
+#final2{
+margin-top:20px;
+font-size:28px;
+opacity:0;
+transition:1s;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+
+<div class="clock">
+<div class="hand"></div>
+</div>
+
+<h1>Vanessa...</h1>
+
+<div id="dialogo"></div>
+
+<button id="aceptar">Acepto salir contigo ❤️</button>
+<button id="rechazar">No quiero </button>
+<button id="forzado">No tienes opción amor 😏</button>
+
+</div>
+
+<div id="final">
+❤️ No te arrepentirás amor ❤️
+<div id="final2">💌 te quiero amor</div>
+</div>
+
+<script>
+
+/* ===== DIALOGOS ===== */
+
+let textos=[
+"...el tiempo avanza lentamente...",
+"pero hay personas que lo detienen...",
+"personas que cambian todo...",
+"y tú eres una de ellas...",
+"por eso quiero hacerte esta invitación...",
+"y de esta forma tan especial...",
+"amor... ¿quieres salir conmigo en San Valentín? ❤️"
+];
+
+let i=0;
+
+function escribir(){
+if(i<textos.length){
+document.getElementById("dialogo").innerText=textos[i];
+i++;
+setTimeout(escribir,2000);
+}
+}
+
+escribir();
+
+/* ===== PARTICULAS ===== */
+
+function crearParticula(){
+
+let p=document.createElement("div");
+p.className="particle";
+p.innerText="🌹";
+p.style.left=Math.random()*100+"vw";
+p.style.fontSize=(10+Math.random()*25)+"px";
+p.style.animationDuration=(4+Math.random()*5)+"s";
+
+document.body.appendChild(p);
+
+setTimeout(()=>p.remove(),9000);
+}
+
+setInterval(crearParticula,300);
+
+/* ===== BOTONES ===== */
+
+let btnAceptar=document.getElementById("aceptar");
+let btnNo=document.getElementById("rechazar");
+let btnForzado=document.getElementById("forzado");
+
+function finalRomantico(){
+
+document.getElementById("main").style.display="none";
+document.body.style.background="black";
+document.getElementById("final").style.display="block";
+
+let escala=1;
+
+let grow=setInterval(()=>{
+escala+=0.1;
+document.getElementById("final").style.transform=
+"translate(-50%,-50%) scale("+escala+")";
+
+if(escala>3){
+clearInterval(grow);
+}
+},50);
+
+/* segunda frase despues */
+
+setTimeout(()=>{
+document.getElementById("final2").style.opacity="1";
+},2500);
+
+}
+
+btnAceptar.onclick=finalRomantico;
+btnForzado.onclick=finalRomantico;
+
+btnNo.onclick=function(){
+btnNo.style.display="none";
+btnForzado.style.display="inline-block";
+};
+
+</script>
+
+</body>
+</html>
